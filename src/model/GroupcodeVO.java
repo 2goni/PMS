@@ -3,6 +3,7 @@ package model;
 public class GroupcodeVO {
 	private String gcode;
 	private String gname;
+	
 
 	@Override
 	public String toString() {

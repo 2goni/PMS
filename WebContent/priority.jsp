@@ -1,5 +1,7 @@
+<%@page import="model.ProductVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,13 +9,24 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3> 생산관리 등록화면 </h3>
-<from action="creat" method="post">
- <fieldset style="width:30%;">
-  <legend><b>기능</b></legend>
-  <input style="background:gold;" type="button" onclick="location.href='create.jsp'" value="제품입력"><br>
-  <input type="button"><br>
- </fieldset>
- </from>>
+			<% List<ProductVO> list = (List<ProductVO>)request.getAttribute("list");%>
+<div id="login"	style="width: 30%; text-align: center; margin: 0px auto;">
+		<h3>우선생산 제품화면</h3>
+		<table style="margin: auto;" border="1">
+			<th>제품이름</th>
+			<th>생산해야할 수량</th>
+			<%
+			for (ProductVO vo : list) {
+			%>
+			<tr>
+				<td><%=vo.getPname()%></td>
+				<td><%=vo.getPnum()%></td>
+			</tr>
+			<%
+			}
+			%>
+		</table>
+		<input style="background: gold;" type="button"
+			onclick="location.href='main.do'" value="메인화면">
 </body>
 </html>

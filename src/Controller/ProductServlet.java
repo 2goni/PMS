@@ -85,8 +85,62 @@ public class ProductServlet extends HttpServlet {
 		}else if(action.equals("search.do")) {
 			ProductVO vo = new ProductVO();
 			vo.setCode(request.getParameter("code"));
-			System.out.println(vo.getPname());
-			
+			ProductDAOImpl dao = new ProductDAOImpl();
+			try {
+				vo = dao.readOne(vo);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			RequestDispatcher dispatcher = request.getRequestDispatcher("product_output.do");
+			request.setAttribute("vo", vo);
+			dispatcher.forward(request, response);
+		}else if(action.equals("update.do")) {
+			ProductVO vo = new ProductVO();
+			vo.setCode(request.getParameter("code"));
+			vo.setPname(request.getParameter("pname"));
+			vo.setCost(Integer.parseInt(request.getParameter("cost")));
+			vo.setPnum(Integer.parseInt(request.getParameter("pnum")));
+			vo.setInum(Integer.parseInt(request.getParameter("inum")));
+			vo.setSale(Integer.parseInt(request.getParameter("sale")));
+			vo.setGcode(request.getParameter("gcode"));
+			ProductDAOImpl dao = new ProductDAOImpl();
+			try {
+				dao.update(vo);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			response.sendRedirect("product_output.do");
+		}else if(action.equals("delete.do")) {
+			ProductVO vo = new ProductVO();
+			vo.setCode(request.getParameter("code"));
+			vo.setPname(request.getParameter("pname"));
+			vo.setCost(Integer.parseInt(request.getParameter("cost")));
+			vo.setPnum(Integer.parseInt(request.getParameter("pnum")));
+			vo.setInum(Integer.parseInt(request.getParameter("inum")));
+			vo.setSale(Integer.parseInt(request.getParameter("sale")));
+			vo.setGcode(request.getParameter("gcode"));
+			ProductDAOImpl dao = new ProductDAOImpl();
+			try {
+				dao.delete(vo);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			response.sendRedirect("product_output.do");
+		}else if(action.equals("priority.do")) {
+			ProductDAOImpl dao = new ProductDAOImpl();
+			List<ProductVO> list = null;
+			try {
+				list = dao.readList();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			RequestDispatcher dispatcher = request.getRequestDispatcher("priority.jsp");
+			request.setAttribute("list", list);
+			dispatcher.forward(request, response);
 		}
 		
 	}
